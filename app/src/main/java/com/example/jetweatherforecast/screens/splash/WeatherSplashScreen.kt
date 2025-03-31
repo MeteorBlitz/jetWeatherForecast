@@ -7,6 +7,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -47,19 +48,32 @@ fun WeatherSplashScreen(navController: NavController){
         delay(2000L)
         navController.navigate(WeatherScreens.MainScreen.name)
     })
-
-    Surface(modifier = Modifier.padding(15.dp).size(300.dp).scale(scale.value),
-        shape = CircleShape,
-        border = BorderStroke(width = 2.dp, color = Color.LightGray) ) {
-        Column(modifier = Modifier.padding(1.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center) {
-            Image(painter = painterResource(R.drawable.sun) , contentDescription = "sunny icon",
-                contentScale = ContentScale.Fit,
-                modifier = Modifier.size(95.dp),)
-            Text(text = "Find the Sun?",
-                style = MaterialTheme.typography.headlineMedium,
-                color = Color.LightGray)
+    Column (
+        modifier = Modifier.padding(5.dp).fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Surface(
+            modifier = Modifier.padding(15.dp).size(300.dp).scale(scale.value),
+            shape = CircleShape,
+            border = BorderStroke(width = 2.dp, color = Color.LightGray)
+        ) {
+            Column(
+                modifier = Modifier.padding(1.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.sun), contentDescription = "sunny icon",
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier.size(95.dp),
+                )
+                Text(
+                    text = "Find the Sun?",
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = Color.LightGray
+                )
+            }
         }
     }
 }
