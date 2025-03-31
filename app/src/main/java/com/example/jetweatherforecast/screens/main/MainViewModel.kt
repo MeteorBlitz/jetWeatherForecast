@@ -18,6 +18,11 @@ class MainViewModel @Inject constructor(private var repository: WeatherRepositor
     val data : MutableState<DataOrExceptional<Weather,Boolean,Exception>>
     = mutableStateOf(DataOrExceptional(null,true,Exception("")))
 
+    suspend fun getWeather(city: String)
+    : DataOrExceptional<Weather,Boolean,Exception>{
+        return  repository.getWeather(cityQuery = city)
+    }
+/*
     init {
         loadWeather()
     }
@@ -35,4 +40,6 @@ class MainViewModel @Inject constructor(private var repository: WeatherRepositor
         }
         Log.d("GET", "getWeather: ${data.value.data.toString()}")
     }
+
+ */
 }

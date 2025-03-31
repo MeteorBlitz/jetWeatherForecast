@@ -69,6 +69,9 @@ dependencies {
     //navigation compose
     implementation(libs.androidx.navigation.compose)
 
+    //hilt navigation compose
+    implementation(libs.androidx.hilt.navigation.compose)
+
     // ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     // Lifecycles only (without ViewModel or LiveData)
