@@ -1,14 +1,18 @@
 package com.example.jetweatherforecast.screens.main
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.jetweatherforecast.data.DataOrExceptional
@@ -37,9 +41,16 @@ fun MainScreen(navController: NavController, mainViewModel: MainViewModel = hilt
 @Composable
 fun MainScaffold(weather: Weather, navController: NavController) {
     Scaffold(topBar = {
-        WeatherAppBar(title = weather.city.name + ", ${weather.city.country}")
+        WeatherAppBar(title = weather.city.name + ", ${weather.city.country}",
+            icon = Icons.AutoMirrored.Filled.ArrowBack,
+            navController = navController,
+            elevation = 5.dp){
+            Log.d("TAG", "MainScaffold: Button Clicked")
+        }
     }) { innerPadding ->
-        Column( modifier = Modifier.padding(innerPadding).fillMaxSize()) {
+        Column( modifier = Modifier
+            .padding(innerPadding)
+            .fillMaxSize()) {
             MainContent(data = weather)
         }
     }
