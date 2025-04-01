@@ -32,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.jetweatherforecast.data.DataOrExceptional
 import com.example.jetweatherforecast.model.Weather
+import com.example.jetweatherforecast.navigation.WeatherScreens
 import com.example.jetweatherforecast.widgets.HumidityWindPressureRow
 import com.example.jetweatherforecast.widgets.SunsetSunriseRow
 import com.example.jetweatherforecast.widgets.WeatherAppBar
@@ -61,8 +62,11 @@ fun MainScreen(navController: NavController, mainViewModel: MainViewModel = hilt
 fun MainScaffold(weather: Weather, navController: NavController) {
     Scaffold(topBar = {
         WeatherAppBar(title = weather.city.name + ", ${weather.city.country}",
-            icon = Icons.AutoMirrored.Filled.ArrowBack,
+            //icon = Icons.AutoMirrored.Filled.ArrowBack,
             navController = navController,
+            onAddActionClicked = {
+                navController.navigate(WeatherScreens.SearchScreen.name)
+            },
             elevation = 5.dp){
             Log.d("TAG", "MainScaffold: Button Clicked")
         }
