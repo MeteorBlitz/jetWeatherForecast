@@ -28,6 +28,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.jetweatherforecast.navigation.WeatherScreens
 import com.example.jetweatherforecast.widgets.WeatherAppBar
 
 @Composable
@@ -50,8 +51,9 @@ fun SearchScreen(navController: NavController) {
                SearchBar(modifier = Modifier
                    .fillMaxWidth()
                    .padding(16.dp)
-                   .align(Alignment.CenterHorizontally)){
-                   Log.d("TAG", "SearchScreen: ${it}")
+                   .align(Alignment.CenterHorizontally)){mCity ->
+                   navController.navigate(WeatherScreens.MainScreen.name+"/$mCity")
+                   Log.d("TAG", "SearchScreen: $mCity")
                }
 
            }

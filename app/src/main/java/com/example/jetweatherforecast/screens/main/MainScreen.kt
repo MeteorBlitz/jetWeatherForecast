@@ -12,8 +12,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -40,7 +38,12 @@ import com.example.jetweatherforecast.widgets.WeatherDetailRow
 import com.example.jetweatherforecast.widgets.WeatherStateImage
 
 @Composable
-fun MainScreen(navController: NavController, mainViewModel: MainViewModel = hiltViewModel()){
+fun MainScreen(
+    navController: NavController,
+    mainViewModel: MainViewModel = hiltViewModel(),
+    city: String?
+){
+    Log.d("TAG", "MainScreen: $city")
     val weatherData = produceState<DataOrExceptional<Weather, Boolean, Exception>>(
         initialValue = DataOrExceptional(loading = true)
     ) {
@@ -84,7 +87,9 @@ fun MainScaffold(weather: Weather, navController: NavController) {
 fun MainContent(data: Weather) {
 
     val imageUrl = "https://openweathermap.org/img/wn/${data.list[0].weather[0].icon}.png"
-    Column (modifier = Modifier.padding(4.dp).fillMaxWidth(),
+    Column (modifier = Modifier
+        .padding(4.dp)
+        .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center){
 
@@ -93,7 +98,9 @@ fun MainContent(data: Weather) {
             modifier = Modifier.padding(6.dp),
             fontWeight = FontWeight.SemiBold,)
 
-        Surface(modifier = Modifier.padding(4.dp).size(200.dp),
+        Surface(modifier = Modifier
+            .padding(4.dp)
+            .size(200.dp),
             shape = CircleShape,
             color = Color(0xFFFFC400)) {
             Column (verticalArrangement = Arrangement.Center,
