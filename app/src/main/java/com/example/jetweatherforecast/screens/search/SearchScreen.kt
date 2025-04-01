@@ -1,5 +1,6 @@
 package com.example.jetweatherforecast.screens.search
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -46,6 +47,12 @@ fun SearchScreen(navController: NavController) {
             .padding(innerPadding)) {
            Column(verticalArrangement = Arrangement.Center,
                horizontalAlignment = Alignment.CenterHorizontally){
+               SearchBar(modifier = Modifier
+                   .fillMaxWidth()
+                   .padding(16.dp)
+                   .align(Alignment.CenterHorizontally)){
+                   Log.d("TAG", "SearchScreen: ${it}")
+               }
 
            }
         }
@@ -53,7 +60,7 @@ fun SearchScreen(navController: NavController) {
 }
 
 @Composable
-fun SearchBar(onSearch : (String) -> Unit = {}) {
+fun SearchBar(modifier: Modifier= Modifier,onSearch : (String) -> Unit = {}) {
     val searchQueryState = rememberSaveable { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
     val valid = remember(searchQueryState.value) {
@@ -63,7 +70,12 @@ fun SearchBar(onSearch : (String) -> Unit = {}) {
         CommonTextField(
             valueState = searchQueryState,
             placeholder = "Seattle",
-            onAction = KeyboardActions {}
+            onAction = KeyboardActions {
+                if (!valid) return@KeyboardActions // empty text return nothing
+                onSearch(searchQueryState.value.trim())
+                searchQueryState.value = ""
+                keyboardController?.hide()
+            }
         )
     }
 }
