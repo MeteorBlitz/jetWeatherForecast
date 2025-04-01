@@ -32,8 +32,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -46,6 +48,7 @@ import com.example.jetweatherforecast.model.Weather
 import com.example.jetweatherforecast.model.WeatherItem
 import com.example.jetweatherforecast.utils.formatDate
 import com.example.jetweatherforecast.utils.formatDateTime
+import com.example.jetweatherforecast.utils.formatDecimals
 import com.example.jetweatherforecast.widgets.WeatherAppBar
 
 @Composable
@@ -150,10 +153,31 @@ fun WeatherDetailRow(weatherItem: WeatherItem) {
         Row(modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(text = formatDate(weatherItem.dt)
+                Text(text = formatDate(weatherItem.dt) // Tue, Apr 1
                     .split(",")[0],
                     modifier = Modifier.padding(start = 5.dp))
             WeatherStateImage(imageUrl = imageUrl)
+            Surface(modifier = Modifier.padding(1.dp),
+                shape = CircleShape,
+                color = Color(0xFFFFC400)) {
+                Text(text = weatherItem.weather[0].description,
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.padding(4.dp))
+            }
+            Text(text = buildAnnotatedString {
+                withStyle(style = MaterialTheme.typography.titleMedium.copy(
+                    color = Color.Blue,
+                    fontWeight = FontWeight.SemiBold
+                ).toSpanStyle()){
+                    append(formatDecimals(weatherItem.temp.max) + "°")
+                }
+                withStyle(style = MaterialTheme.typography.titleMedium.copy(
+                    color = Color.LightGray,
+                ).toSpanStyle()){
+                    append(formatDecimals(weatherItem.temp.min) + "°")
+                }
+
+            })
 
         }
     }
