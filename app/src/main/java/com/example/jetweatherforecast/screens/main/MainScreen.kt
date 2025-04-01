@@ -31,6 +31,7 @@ import androidx.navigation.NavController
 import com.example.jetweatherforecast.data.DataOrExceptional
 import com.example.jetweatherforecast.model.Weather
 import com.example.jetweatherforecast.navigation.WeatherScreens
+import com.example.jetweatherforecast.utils.formatDate
 import com.example.jetweatherforecast.widgets.HumidityWindPressureRow
 import com.example.jetweatherforecast.widgets.SunsetSunriseRow
 import com.example.jetweatherforecast.widgets.WeatherAppBar
@@ -48,7 +49,7 @@ fun MainScreen(
         initialValue = DataOrExceptional(loading = true)
     ) {
         // value = mainViewModel.data.value
-        value = mainViewModel.getWeather(city = "Portland")
+        value = mainViewModel.getWeather(city = city.toString())
     }.value
 
     if (weatherData.loading == true){
@@ -93,7 +94,7 @@ fun MainContent(data: Weather) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center){
 
-        Text(text = "Nov 29", style = MaterialTheme.typography.titleLarge,
+        Text(text = formatDate(data.list[0].dt), style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(6.dp),
             fontWeight = FontWeight.SemiBold,)
