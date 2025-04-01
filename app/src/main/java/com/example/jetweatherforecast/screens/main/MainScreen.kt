@@ -5,12 +5,17 @@ import android.media.Image
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
@@ -39,6 +44,7 @@ import com.example.jetweatherforecast.R
 import com.example.jetweatherforecast.data.DataOrExceptional
 import com.example.jetweatherforecast.model.Weather
 import com.example.jetweatherforecast.model.WeatherItem
+import com.example.jetweatherforecast.utils.formatDate
 import com.example.jetweatherforecast.utils.formatDateTime
 import com.example.jetweatherforecast.widgets.WeatherAppBar
 
@@ -112,7 +118,47 @@ fun MainContent(data: Weather) {
         HumidityWindPressureRow(weatherItem = data.list[0])
         HorizontalDivider()
         SunsetSunriseRow(weatherItem = data.list[0])
+        Text(text = "This Week",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(bottom = 5.dp))
+
+        Surface(modifier = Modifier.fillMaxSize(),
+            color = Color(0xFFEEF1EF),
+            shape = RoundedCornerShape(size = 14.dp)) {
+
+            LazyColumn(modifier = Modifier.padding(2.dp),
+                contentPadding = PaddingValues(1.dp)) {
+                items(items = data.list) {item ->
+                    WeatherDetailRow(weatherItem = item)
+
+                }
+            }
+
+        }
     }
+}
+
+@Composable
+fun WeatherDetailRow(weatherItem: WeatherItem) {
+    val imageUrl = "https://openweathermap.org/img/wn/${weatherItem.weather[0].icon}.png"
+    Surface(modifier = Modifier.padding(3.dp).fillMaxWidth(),
+        shape = CircleShape.copy(
+            topEnd = CornerSize(6.dp)
+        ),
+        color = Color.White) {
+        Row(modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(text = formatDate(weatherItem.dt)
+                    .split(",")[0],
+                    modifier = Modifier.padding(start = 5.dp))
+            WeatherStateImage(imageUrl = imageUrl)
+
+        }
+    }
+
+
 }
 
 @Composable
