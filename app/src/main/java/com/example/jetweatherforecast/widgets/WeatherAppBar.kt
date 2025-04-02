@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.jetweatherforecast.model.Favorite
 import com.example.jetweatherforecast.navigation.WeatherScreens
 import com.example.jetweatherforecast.screens.favorites.FavoriteViewModel
 
@@ -87,12 +88,18 @@ fun WeatherAppBar(
                 }
             }
             if (isMainScreen){
-                Icon(imageVector = Icons.Default.FavoriteBorder,
+                Icon(imageVector = Icons.Default.Favorite,
                     contentDescription = "favorite",
                     modifier = Modifier.scale(0.9f).clickable{
-                        Log.d("TAG", "WeatherAppBar: Clicked")
+                        val dataList = title.split(",")
+                        favoriteViewModel.insertFavorite(Favorite(
+                            city = dataList[0],
+                            country = dataList[1]
 
-                    })
+                        ))
+                        Log.d("TAG", "WeatherAppBar: Clicked")
+                    },
+                    tint = Color.Red.copy(alpha = 0.6f))
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
