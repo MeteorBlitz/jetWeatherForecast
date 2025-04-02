@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
@@ -29,6 +30,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -37,8 +39,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.jetweatherforecast.navigation.WeatherScreens
+import com.example.jetweatherforecast.screens.favorites.FavoriteViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
@@ -49,6 +53,7 @@ fun WeatherAppBar(
     isMainScreen: Boolean = true,
     elevation: Dp = 0.dp,
     navController: NavController,
+    favoriteViewModel: FavoriteViewModel = hiltViewModel(),
     onAddActionClicked: () -> Unit = {},
     onButtonClicked: () -> Unit = {},
 ) {
@@ -80,6 +85,14 @@ fun WeatherAppBar(
                 IconButton(onClick = { onButtonClicked.invoke() }) {
                     Icon(imageVector = icon, contentDescription = null, tint = MaterialTheme.colorScheme.onBackground)
                 }
+            }
+            if (isMainScreen){
+                Icon(imageVector = Icons.Default.FavoriteBorder,
+                    contentDescription = "favorite",
+                    modifier = Modifier.scale(0.9f).clickable{
+                        Log.d("TAG", "WeatherAppBar: Clicked")
+
+                    })
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
