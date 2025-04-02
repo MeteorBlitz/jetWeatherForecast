@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.jetweatherforecast.navigation.WeatherScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
@@ -109,9 +110,9 @@ fun SettingsDropDownMenu(showDialog: MutableState<Boolean>, navController: NavCo
                         expanded.value = false
                         showDialog.value = false
                         when(text){
-                            "About" -> Log.d("TAG", "SettingsDropDownMenu: About menu clicked")
-                            "Favorites" -> Log.d("TAG", "SettingsDropDownMenu: Favorites menu clicked")
-                            "Settings" -> Log.d("TAG", "SettingsDropDownMenu: Settings menu clicked")
+                            "About" -> navController.navigate(WeatherScreens.AboutScreen.name)
+                            "Favorites" -> navController.navigate(WeatherScreens.FavoriteScreen.name)
+                            "Settings" -> navController.navigate(WeatherScreens.SettingsScreen.name)
                         }
                     },
                     leadingIcon = {
