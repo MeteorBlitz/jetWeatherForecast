@@ -19,6 +19,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
@@ -36,6 +37,7 @@ import com.example.jetweatherforecast.model.Weather
 import com.example.jetweatherforecast.navigation.WeatherScreens
 import com.example.jetweatherforecast.screens.settings.SettingsViewModel
 import com.example.jetweatherforecast.utils.formatDate
+import com.example.jetweatherforecast.utils.formatDecimals
 import com.example.jetweatherforecast.widgets.HumidityWindPressureRow
 import com.example.jetweatherforecast.widgets.SunsetSunriseRow
 import com.example.jetweatherforecast.widgets.WeatherAppBar
@@ -74,7 +76,7 @@ fun MainScreen(
             CircularProgressIndicator()
         }else if (weatherData.data != null){
             //Text(text ="MainScreen: ${weatherData.data!!.city.country}" )
-            MainScaffold(weather = weatherData.data!!, navController = navController)
+            MainScaffold(weather = weatherData.data!!, navController = navController, isImperial = isImperial.value)
         }
     }
 
@@ -83,7 +85,7 @@ fun MainScreen(
 
 }
 @Composable
-fun MainScaffold(weather: Weather, navController: NavController) {
+fun MainScaffold(weather: Weather, navController: NavController, isImperial: Boolean) {
     Scaffold(topBar = {
         WeatherAppBar(title = weather.city.name + ", ${weather.city.country}",
             //icon = Icons.AutoMirrored.Filled.ArrowBack,
@@ -98,14 +100,14 @@ fun MainScaffold(weather: Weather, navController: NavController) {
         Column( modifier = Modifier
             .padding(innerPadding)
             .fillMaxSize()) {
-            MainContent(data = weather)
+            MainContent(data = weather,isImperial = isImperial)
         }
     }
 
 }
 
 @Composable
-fun MainContent(data: Weather) {
+fun MainContent(data: Weather, isImperial: Boolean) {
 
     val imageUrl = "https://openweathermap.org/img/wn/${data.list[0].weather[0].icon}.png"
     Column (modifier = Modifier
@@ -128,16 +130,16 @@ fun MainContent(data: Weather) {
                 horizontalAlignment = Alignment.CenterHorizontally){
 
                 WeatherStateImage(imageUrl = imageUrl)
-                Text(text = "56",
+                Text(text = formatDecimals(data.list[0].temp.day) + "º",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.ExtraBold,)
-                Text(text = "Snow",
+                Text(text = data.list[0].weather[0].main,
                     style = MaterialTheme.typography.titleMedium,
                     fontStyle = FontStyle.Italic,)
 
             }
         }
-        HumidityWindPressureRow(weatherItem = data.list[0])
+        HumidityWindPressureRow(weatherItem = data.list[0], isImperial = isImperial)
         HorizontalDivider()
         SunsetSunriseRow(weatherItem = data.list[0])
         Text(text = "This Week",

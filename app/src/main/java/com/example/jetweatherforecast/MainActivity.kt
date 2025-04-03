@@ -25,9 +25,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun WeatherApp(){
     JetWeatherForecastTheme {
-
-                WeatherNavigation()
-
+        WeatherNavigation()
     }
 }
 

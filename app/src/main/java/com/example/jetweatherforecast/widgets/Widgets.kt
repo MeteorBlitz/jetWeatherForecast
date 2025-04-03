@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -94,7 +95,7 @@ fun SunsetSunriseRow(weatherItem: WeatherItem) {
 }
 
 @Composable
-fun HumidityWindPressureRow(weatherItem: WeatherItem) {
+fun HumidityWindPressureRow(weatherItem: WeatherItem, isImperial: Boolean) {
     Row(modifier = Modifier.padding(12.dp)
         .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -110,14 +111,14 @@ fun HumidityWindPressureRow(weatherItem: WeatherItem) {
             Icon(painter = painterResource(R.drawable.pressure),
                 contentDescription = "pressure icon",
                 modifier = Modifier.size(20.dp))
-            Text(text = "${weatherItem.humidity} psi",
+            Text(text = "${weatherItem.pressure} psi",
                 style = MaterialTheme.typography.titleMedium)
         }
         Row(modifier = Modifier.padding(4.dp)) {
             Icon(painter = painterResource(R.drawable.wind),
                 contentDescription = "wind icon",
                 modifier = Modifier.size(20.dp))
-            Text(text = "${weatherItem.humidity} mph",
+            Text(text = formatDecimals(weatherItem.speed) + if (isImperial) "mph" else "m/s",
                 style = MaterialTheme.typography.titleMedium)
         }
     }
