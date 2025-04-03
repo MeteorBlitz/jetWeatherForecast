@@ -34,11 +34,11 @@ import com.example.jetweatherforecast.widgets.WeatherAppBar
 
 @Composable
 fun SettingsScreen(navController: NavController, settingsViewModel: SettingsViewModel = hiltViewModel()) {
-    val unitToggleState = remember { mutableStateOf(false) }
+    var unitToggleState = remember { mutableStateOf(false) }
     val measurementunits = listOf("Imperial (F), Metric (C)")
     val choiceFromDb = settingsViewModel.unitList.collectAsState().value
     val defaultChoice = if (choiceFromDb.isEmpty()) measurementunits[0] else choiceFromDb[0].unit
-    val choiceState = remember { mutableStateOf(defaultChoice) }
+    var choiceState = remember { mutableStateOf(defaultChoice) }
     Scaffold(topBar = {
         WeatherAppBar(
             title = "Settings",
