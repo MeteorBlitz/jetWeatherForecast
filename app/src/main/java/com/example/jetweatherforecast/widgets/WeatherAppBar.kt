@@ -1,6 +1,8 @@
 package com.example.jetweatherforecast.widgets
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -26,6 +28,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -61,6 +64,11 @@ fun WeatherAppBar(
     val showDialog = remember {
         mutableStateOf(false)
     }
+    val showIt = remember {
+        mutableStateOf(false)
+    }
+    val context = navController.context
+
     if (showDialog.value) {
         SettingsDropDownMenu(showDialog = showDialog, navController = navController)
     }
@@ -88,18 +96,31 @@ fun WeatherAppBar(
                 }
             }
             if (isMainScreen){
-                Icon(imageVector = Icons.Default.Favorite,
-                    contentDescription = "favorite",
-                    modifier = Modifier.scale(0.9f).clickable{
-                        val dataList = title.split(",")
-                        favoriteViewModel.insertFavorite(Favorite(
-                            city = dataList[0],
-                            country = dataList[1]
+                val isAlreadyList = favoriteViewModel.favList.collectAsState().value.filter { item->
+                    item.city == title.split(",")[0]
+                }
+                if (isAlreadyList.isEmpty()){
+                    Icon(imageVector = Icons.Default.Favorite,
+                        contentDescription = "favorite",
+                        modifier = Modifier.scale(0.9f).clickable{
+                            val dataList = title.split(",")
+                            favoriteViewModel.insertFavorite(Favorite(
+                                city = dataList[0],
+                                country = dataList[1]
 
-                        ))
-                        Log.d("TAG", "WeatherAppBar: Clicked")
-                    },
-                    tint = Color.Red.copy(alpha = 0.6f))
+                            )).run {
+                                showIt.value = true
+                            }
+                            //Log.d("TAG", "WeatherAppBar: Clicked")
+                        },
+                        tint = Color.Red.copy(alpha = 0.6f))
+                }else {
+                    showIt.value =false
+                    Box{}
+                }
+
+                ShowToast(context = context, showIt = showIt)
+
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
@@ -107,6 +128,13 @@ fun WeatherAppBar(
         ),
         modifier = Modifier.shadow(elevation=elevation))
 
+}
+
+@Composable
+fun ShowToast(context: Context, showIt: MutableState<Boolean>) {
+    if(showIt.value) {
+        Toast.makeText(context, "Added to Favorites", Toast.LENGTH_SHORT).show()
+    }
 }
 
 @Composable
