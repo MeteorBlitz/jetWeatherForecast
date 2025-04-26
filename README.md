@@ -27,7 +27,6 @@ It fetches real-time weather data using the OpenWeatherMap API, displays current
 - MVVM Architecture
 
 ## 📸 Screenshots
-<h3>📸 App Screenshots</h3>
 
 <table>
   <tr>
