@@ -28,8 +28,20 @@ It fetches real-time weather data using the OpenWeatherMap API, displays current
 
 ## 📸 Screenshots
 
-(Coming soon... 👇)  
-*(You will add screenshots here after uploading them.)*
+### Splash Screen
+![Splash Screen](screenshots/splash_screen.png)
+
+### Home Screen
+![Home Screen](screenshots/home_screen.png)
+
+### Favorites City Screen
+![Favorites city list Screen](screenshots/favorites_list_screen.png)
+
+### Settings Screen (Celsius ↔️ Fahrenheit)
+![Settings Screen](screenshots/Settings_Screen.png)
+
+### Menu list
+![Menu list](screenshots/menu_screen.png)
 
 ## 📂 Installation
 
