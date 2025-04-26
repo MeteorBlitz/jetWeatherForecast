@@ -27,22 +27,24 @@ It fetches real-time weather data using the OpenWeatherMap API, displays current
 - MVVM Architecture
 
 ## 📸 Screenshots
+<h3>📸 App Screenshots</h3>
 
-### Splash Screen
-![Splash Screen](screenshots/splash_screen.png)
-
-### Home Screen
-![Home Screen](screenshots/home_screen.png)
-
-### Favorites City Screen
-![Favorites city list Screen](screenshots/favorites_list_screen.png)
-
-### Settings Screen (Celsius ↔️ Fahrenheit)
-![Settings Screen](screenshots/Settings_Screen.png)
-
-### Menu list
-![Menu list](screenshots/menu_screen.png)
-
+<table>
+  <tr>
+    <td><img src="screenshots/splash_screen.png" width="180"/></td>
+    <td><img src="screenshots/home_screen.png" width="180"/></td>
+    <td><img src="screenshots/favorites_list_screen.png" width="180"/></td>
+    <td><img src="screenshots/Settings_Screen.png" width="180"/></td>
+    <td><img src="screenshots/menu_screen.png" width="180"/></td>
+  </tr>
+  <tr>
+    <td><center>Splash</center></td>
+    <td><center>Home</center></td>
+    <td><center>Favorites</center></td>
+    <td><center>Settings</center></td>
+    <td><center>Menu</center></td>
+  </tr>
+</table>
 ## 📂 Installation
 
 1. Clone the repository
