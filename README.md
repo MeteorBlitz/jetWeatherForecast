@@ -1,4 +1,3 @@
-![JetWeatherForecast](https://github.com/MeteorBlitz/jetWeatherForecast/blob/main/screenshots/home_screen.png?raw=true)
 # JetWeatherForecast 🌦️
 
 JetWeatherForecast is a modern weather forecasting app built with Kotlin and Jetpack Compose.  
